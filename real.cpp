@@ -106,14 +106,9 @@ RealVariable& RealVariable::operator / (double coe)
     return *res;   
 }
 
-RealVariable& RealVariable::operator / (const RealVariable& other)
-{
-    throw runtime_error("");
-}
-
 RealVariable& solver::operator / (double coe, const RealVariable& other)
 {
-    if(other.m_a == 0 && other.m_b == 0 && other.m_c == 0)
+    if(other.m_a == 0 || other.m_b == 0 || other.m_c == 0)
     {
         throw runtime_error("Cannot divide by 0!");
     }
@@ -126,9 +121,9 @@ RealVariable& solver::operator / (double coe, const RealVariable& other)
 RealVariable& RealVariable::operator ^ (int pow)
 {
     RealVariable * res;
-    if(pow > 2 || (m_a > 1 && pow > 1))
+    if(pow < 0 || pow > 2 || (m_a != 0 && pow > 1))
     {
-        throw runtime_error("Power cannot be greater then 2!");
+        throw runtime_error("Power cannot be greater then 2 or less then 0!");
     }
 
     if(pow == 0)
